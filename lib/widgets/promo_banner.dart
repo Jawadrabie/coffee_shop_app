@@ -20,6 +20,17 @@ class PromoBanner extends StatelessWidget {
                 imagePath,
                 fit: BoxFit.cover,
                 width: double.infinity,
+                errorBuilder: (_, __, ___) => Container(
+                  color: Colors.brown.shade200,
+                  alignment: Alignment.center,
+                  child: const Text(
+                    'Promo image missing',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ),
               ),
             ),
             Positioned.fill(

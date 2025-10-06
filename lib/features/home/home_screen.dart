@@ -59,7 +59,7 @@ class HomeScreen extends StatelessWidget {
             const SizedBox(height: 12),
 
             // Promo banner under search field
-            const PromoBanner(imagePath: 'assets/images/promo_banner.png'),
+            const PromoBanner(imagePath: 'assets/images/onboarding_coffee.png'),
             const SizedBox(height: 12),
             SizedBox(
               height: 36,
