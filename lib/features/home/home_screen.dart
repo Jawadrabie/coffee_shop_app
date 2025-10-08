@@ -4,7 +4,6 @@ import '../../widgets/coffee_card.dart';
 import '../../widgets/chip_filter.dart';
 import '../../core/models/coffee.dart';
 import '../../widgets/promo_banner.dart';
-import '../details/details_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -126,9 +125,9 @@ class HomeScreen extends StatelessWidget {
                     imagePath: c.imagePath,
                     price: c.price,
                     rating: c.rating,
-                    onTap: () => Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => DetailsScreen()),
-                    )
+                    onTap: () => Navigator.of(
+                      context,
+                    ).pushNamed('/details', arguments: c),
                   );
                 },
               ),
