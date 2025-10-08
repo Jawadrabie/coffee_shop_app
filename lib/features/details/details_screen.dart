@@ -1,294 +1,200 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-// rating displayed inline; keep import removed
+import 'package:go_router/go_router.dart';
 import '../../core/models/coffee.dart';
 
-class DetailsScreen extends StatefulWidget {
-  const DetailsScreen({super.key, this.coffee});
+class DetailScreen extends StatelessWidget {
+  final Coffee coffee;
 
-  final Coffee? coffee;
-
-  @override
-  State<DetailsScreen> createState() => _DetailsScreenState();
-}
-
-class _DetailsScreenState extends State<DetailsScreen> {
-  String selectedSize = 'M';
+  const DetailScreen({super.key, required this.coffee});
 
   @override
   Widget build(BuildContext context) {
-    final Coffee coffee =
-        widget.coffee ??
-        (ModalRoute.of(context)?.settings.arguments as Coffee? ??
-            mockCoffees.first);
-
-    return Scaffold(backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        centerTitle: true,
-        leading: IconButton(
-          icon: const Icon(
-            Icons.arrow_back_ios_new_rounded,
-            color: Colors.black87,
-          ),
-          onPressed: () => Navigator.of(context).maybePop(),
-        ),
-        title: const Text(
-          'Detail',
-          style: TextStyle(color: Colors.black87, fontWeight: FontWeight.w700),
-        ),
-        actions: const [
-          Padding(
-            padding: EdgeInsets.only(right: 12),
-            child: Icon(Icons.favorite_border_rounded, color: Colors.black87),
-          ),
-        ],
-      ),
-      body: ListView(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+    return Scaffold(
+      body: Column(
         children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(24),
-            child: Image.asset(
-              coffee.imagePath,
-              height: 260,
-              fit: BoxFit.cover,
-              width: double.infinity,
+          // 1. الجزء القابل للتمرير
+          Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // الصورة العلوية مع الأيقونات
+                  Stack(
+                    children: [
+                      Image.asset(
+                        coffee.imagePath,
+                        width: double.infinity,
+                        height: MediaQuery.of(context).size.height * 0.55,
+                        fit: BoxFit.cover,
+                      ),
+                      Positioned(
+                        top: 50,
+                        left: 20,
+                        child: CircleAvatar(
+                          backgroundColor: Colors.black.withOpacity(0.5),
+                          child: IconButton(
+                            icon: const Icon(Icons.arrow_back, color: Colors.white),
+                            onPressed: () => context.pop(),
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        top: 50,
+                        right: 20,
+                        child: CircleAvatar(
+                          backgroundColor: Colors.black.withOpacity(0.5),
+                          child: IconButton(
+                            icon: const Icon(Icons.favorite_border, color: Colors.white),
+                            onPressed: () {},
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+
+                  // قسم التفاصيل
+                  Padding(
+                    padding: const EdgeInsets.all(30.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(coffee.title, style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold)),
+                                  const SizedBox(height: 4),
+                                  Text(coffee.subtitle, style: Theme.of(context).textTheme.bodyMedium),
+                                ],
+                              ),
+                            ),
+                            Row(
+                              children: [
+                                const Icon(Icons.star, color: Colors.yellow, size: 24),
+                                const SizedBox(width: 5),
+                                Text(
+                                  coffee.rating.toString(),
+                                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
+                        const Divider(height: 40),
+                        Text(
+                          'Description',
+                          style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+                        ),
+                        const SizedBox(height: 10),
+                        Text(
+                          'A ${coffee.title} is a coffee drink that is a variant of a caffè latte, commonly served in a glass rather than a cup. It is made with espresso and steamed milk.',
+                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(height: 1.5, color: Colors.grey.shade600),
+                        ),
+                        const SizedBox(height: 20),
+                        Text(
+                          'Size',
+                          style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+                        ),
+                        const SizedBox(height: 10),
+                        const SizeSelector(),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
-          const SizedBox(height: 18),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                child: Column(
+
+          // 2. الجزء السفلي الثابت
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 20.0),
+            decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(24),
+                  topRight: Radius.circular(24),
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.2),
+                    spreadRadius: 5,
+                    blurRadius: 10,
+                    offset: const Offset(0, -3),
+                  )
+                ]
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    Text('Price', style: TextStyle(color: Colors.grey[600], fontSize: 14)),
                     Text(
-                      coffee.title,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w800,
-                        fontSize: 28,
-                        color: Colors.black87,
-                      ),
-                    ),
-                    const SizedBox(height: 6),
-                    Text(
-                      'Ice/Hot',
+                      '\$ ${coffee.price.toStringAsFixed(2)}',
                       style: TextStyle(
-                        color: Colors.grey.shade500,
-                        fontSize: 14,
+                        color: Theme.of(context).primaryColor,
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ],
                 ),
-              ),
-              _IconChip(asset: 'assets/icons/Fast Delivery.svg'),
-              const SizedBox(width: 10),
-              _IconChip(asset: 'assets/icons/Quality Bean.svg'),
-              const SizedBox(width: 10),
-              _IconChip(asset: 'assets/icons/extra Milk.svg'),
-            ],
-          ),
-          const SizedBox(height: 16),
-          Row(
-            children: [
-              const Icon(Icons.star, color: Color(0xFFFBBE21)),
-              const SizedBox(width: 6),
-              Text(
-                coffee.rating.toStringAsFixed(1),
-                style: const TextStyle(fontWeight: FontWeight.w700),
-              ),
-              const SizedBox(width: 6),
-              Text('(230)', style: TextStyle(color: Colors.grey.shade500)),
-            ],
-          ),
-          const SizedBox(height: 16),
-          Container(height: 1, color: Colors.black12),
-          const SizedBox(height: 16),
-          const Text(
-            'Description',
-            style: TextStyle(fontWeight: FontWeight.w800, fontSize: 20),
-          ),
-          const SizedBox(height: 10),
-          RichText(
-            text: TextSpan(
-              style: TextStyle(
-                color: Colors.grey.shade600,
-                height: 1.6,
-                fontSize: 15,
-              ),
-              children: const [
-                TextSpan(
-                  text:
-                      'A cappuccino is an approximately 150 ml (5 oz) beverage, with 25 ml of espresso coffee and 85ml of fresh milk the fo.. ',
-                ),
-                TextSpan(
-                  text: 'Read More',
-                  style: TextStyle(
-                    color: Color(0xFFD17842),
-                    fontWeight: FontWeight.w700,
+                SizedBox(
+                  width: 220,
+                  height: 60,
+                  child: ElevatedButton(
+                    onPressed: () {},
+                    child: const Text('Buy Now'),
                   ),
                 ),
               ],
             ),
           ),
-          const SizedBox(height: 20),
-          const Text(
-            'Size',
-            style: TextStyle(fontWeight: FontWeight.w800, fontSize: 18),
-          ),
-          const SizedBox(height: 12),
-          Row(
-            children: [
-              _SizeChip(
-                label: 'S',
-                selected: selectedSize == 'S',
-                onTap: () => setState(() => selectedSize = 'S'),
-              ),
-              const SizedBox(width: 12),
-              _SizeChip(
-                label: 'M',
-                selected: selectedSize == 'M',
-                onTap: () => setState(() => selectedSize = 'M'),
-              ),
-              const SizedBox(width: 12),
-              _SizeChip(
-                label: 'L',
-                selected: selectedSize == 'L',
-                onTap: () => setState(() => selectedSize = 'L'),
-              ),
-            ],
-          ),
-          const SizedBox(height: 100),
         ],
       ),
-      bottomNavigationBar: _BottomBar(price: coffee.price),
     );
   }
 }
 
-class _SizeChip extends StatelessWidget {
-  final String label;
-  final bool selected;
-  final VoidCallback? onTap;
-  const _SizeChip({required this.label, this.selected = false, this.onTap});
+class SizeSelector extends StatefulWidget {
+  const SizeSelector({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final Color border = selected
-        ? const Color(0xFFD17842)
-        : const Color(0xFFE0E0E0);
-    final Color fill = selected ? const Color(0xFFFFE9DF) : Colors.white;
-    final Color text = selected ? const Color(0xFFD17842) : Colors.black87;
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 14),
-        decoration: BoxDecoration(
-          color: fill,
-          borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: border),
-        ),
-        child: Text(
-          label,
-          style: TextStyle(
-            color: text,
-            fontWeight: FontWeight.w700,
-            fontSize: 16,
-          ),
-        ),
-      ),
-    );
-  }
+  State<SizeSelector> createState() => _SizeSelectorState();
 }
 
-class _IconChip extends StatelessWidget {
-  final String asset;
-  const _IconChip({required this.asset});
+class _SizeSelectorState extends State<SizeSelector> {
+  int _selectedIndex = 0;
+  final List<String> _sizes = ['S', 'M', 'L'];
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 54,
-      height: 54,
-      decoration: BoxDecoration(
-        color: const Color(0xFFFFF5EF),
-        borderRadius: BorderRadius.circular(16),
-      ),
-      child: Center(
-        child: SvgPicture.asset(
-          asset,
-          width: 24,
-          height: 24,
-          colorFilter: const ColorFilter.mode(
-            Color(0xFFD17842),
-            BlendMode.srcIn,
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: List.generate(_sizes.length, (index) {
+        final isSelected = _selectedIndex == index;
+        return OutlinedButton(
+          onPressed: () => setState(() => _selectedIndex = index),
+          style: OutlinedButton.styleFrom(
+            minimumSize: const Size(100, 45),
+            side: BorderSide(color: isSelected ? Theme.of(context).primaryColor : Colors.grey.shade300),
+            backgroundColor: isSelected ? Theme.of(context).primaryColor.withOpacity(0.1) : Colors.transparent,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class _BottomBar extends StatelessWidget {
-  final double price;
-  const _BottomBar({required this.price});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.fromLTRB(20, 14, 20, 20),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.06),
-            blurRadius: 12,
-            offset: const Offset(0, -4),
-          ),
-        ],
-      ),
-      child: Row(
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text('Price', style: TextStyle(color: Colors.grey.shade500)),
-              const SizedBox(height: 6),
-              Text(
-                '\$ ${price.toStringAsFixed(2)}',
-                style: const TextStyle(
-                  fontWeight: FontWeight.w800,
-                  fontSize: 22,
-                  color: Color(0xFFD17842),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(width: 16),
-          Expanded(
-            child: SizedBox(
-              height: 56,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFFD17842),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(18),
-                  ),
-                  elevation: 0,
-                ),
-                onPressed: () {},
-                child: const Text(
-                  'Buy Now',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800),
-                ),
-              ),
+          child: Text(
+            _sizes[index],
+            style: TextStyle(
+              color: isSelected ? Theme.of(context).primaryColor : Colors.black,
+              fontWeight: FontWeight.bold,
             ),
           ),
-        ],
-      ),
+        );
+      }),
     );
   }
 }

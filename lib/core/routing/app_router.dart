@@ -16,7 +16,8 @@ class AppRoutes {
     home: (_) => const HomeScreen(),
     details: (ctx) {
       final args = ModalRoute.of(ctx)?.settings.arguments;
-      return DetailsScreen(coffee: args is Coffee ? args : null);
+      final Coffee coffee = args is Coffee ? args : mockCoffees.first;
+      return DetailScreen(coffee: coffee);
     },
     cart: (_) => const CartScreen(),
   };

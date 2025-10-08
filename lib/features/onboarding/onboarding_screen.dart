@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../../core/routing/app_router.dart' show AppRoutes;
 
 class OnboardingScreen extends StatelessWidget {
   const OnboardingScreen({super.key});
@@ -79,7 +80,7 @@ class OnboardingScreen extends StatelessWidget {
                     width: screenWidth,
                     child: ElevatedButton(
                       onPressed: () =>
-                          Navigator.of(context).pushReplacementNamed('/'),
+                          Navigator.of(context).pushReplacementNamed(AppRoutes.home),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFFD17842),
                         foregroundColor: Colors.white,
