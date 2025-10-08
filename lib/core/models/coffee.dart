@@ -16,6 +16,12 @@ class Coffee {
   });
 }
 
+class CartItem {
+  final Coffee coffee;
+  int quantity;
+  CartItem({required this.coffee, this.quantity = 1});
+}
+
 const mockCoffees = <Coffee>[
   Coffee(
     id: '1',

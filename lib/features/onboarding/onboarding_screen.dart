@@ -1,86 +1,98 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:go_router/go_router.dart';
 
 class OnboardingScreen extends StatelessWidget {
   const OnboardingScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // نستخدم MediaQuery للحصول على أبعاد الشاشة
+    // أبعاد الشاشة
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
       body: Stack(
-        // نستخدم Stack لوضع العناصر فوق بعضها (الخلفية، ثم المحتوى)
         children: [
-          // 1. صورة الخلفية
+          // خلفية الصورة
           Positioned.fill(
             child: Image.asset(
-              'assets/images/onboarding_coffee.png', // تم التعديل ليتطابق مع الموجود
-              fit: BoxFit.cover, // لجعل الصورة تملأ الشاشة
+              'assets/images/onboarding_coffee.png',
+              fit: BoxFit.cover,
               errorBuilder: (_, __, ___) =>
                   Container(color: Colors.brown.shade200),
             ),
           ),
 
-          // 2. طبقة لونية داكنة فوق الصورة لزيادة وضوح النص
+          // تدرج داكن من الأسفل للأعلى لزيادة التباين مثل الصورة المرفقة
           Positioned.fill(
             child: Container(
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [
-                    Colors.black.withOpacity(0.8),
-                    Colors.black.withOpacity(0.3),
-                    Colors.transparent,
-                  ],
                   begin: Alignment.bottomCenter,
                   end: Alignment.topCenter,
+                  colors: [
+                    Colors.black.withOpacity(0.85),
+                    Colors.black.withOpacity(0.45),
+                    Colors.black.withOpacity(0.10),
+                    Colors.transparent,
+                  ],
+                  stops: const [0.0, 0.25, 0.5, 1.0],
                 ),
               ),
             ),
           ),
 
-          // 3. المحتوى (النص والزر)
+          // المحتوى السفلي: العنوان، الوصف، والزر
           Positioned(
-            bottom: screenHeight * 0.1, // تحديد المسافة من الأسفل
             left: 0,
             right: 0,
+            bottom: screenHeight * 0.08,
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 40.0),
+              padding: const EdgeInsets.symmetric(horizontal: 24.0),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  // النص الرئيسي
                   Text(
-                    'Coffee so good, your taste buds will love it.',
+                    'Fall in Love with\nCoffee in Blissful\nDelight!',
                     textAlign: TextAlign.center,
                     style: GoogleFonts.sora(
-                      fontSize: 34,
-                      fontWeight: FontWeight.w600, // Semi-bold
                       color: Colors.white,
+                      fontSize: 38,
+                      height: 1.25,
+                      fontWeight: FontWeight.w700,
                     ),
                   ),
-                  const SizedBox(height: 12),
-                  // النص الفرعي
+                  const SizedBox(height: 16),
                   Text(
-                    'The best grain, the finest roast, the powerful flavor.',
+                    'Welcome to our cozy coffee corner, where\n'
+                    'every cup is a delightful for you.',
                     textAlign: TextAlign.center,
                     style: GoogleFonts.sora(
-                      fontSize: 14,
-                      color: const Color(0xFFA9A9A9),
+                      color: const Color(0xFFB8B8B8),
+                      fontSize: 15,
+                      height: 1.5,
+                      fontWeight: FontWeight.w400,
                     ),
                   ),
-                  const SizedBox(height: 32),
-                  // زر البدء
+                  const SizedBox(height: 28),
                   SizedBox(
                     width: screenWidth,
                     child: ElevatedButton(
-                      onPressed: () {
-                        // استخدم go_router لتفادي أخطاء navigator lock
-                        context.go('/');
-                      },
+                      onPressed: () =>
+                          Navigator.of(context).pushReplacementNamed('/'),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFFD17842),
+                        foregroundColor: Colors.white,
+                        padding: const EdgeInsets.symmetric(vertical: 18),
+                        textStyle: GoogleFonts.sora(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w700,
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(22),
+                        ),
+                        elevation: 0,
+                      ),
                       child: const Text('Get Started'),
                     ),
                   ),

@@ -12,10 +12,12 @@ class CoffeeApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light(),
-      routerConfig: appRouter,
+      initialRoute: AppRoutes.onboarding,
+      routes: AppRoutes.routes,
+      onUnknownRoute: onUnknownRoute,
     );
   }
 }

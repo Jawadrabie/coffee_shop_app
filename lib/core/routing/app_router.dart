@@ -1,18 +1,31 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import '../../features/onboarding/onboarding_screen.dart';
 import '../../features/home/home_screen.dart';
 import '../../features/details/details_screen.dart';
 import '../../features/cart/cart_screen.dart';
+import '../models/coffee.dart';
 
-final appRouter = GoRouter(
-  initialLocation: '/onboarding',
-  routes: [
-    GoRoute(path: '/onboarding', builder: (_, __) => const OnboardingScreen()),
-    GoRoute(path: '/', builder: (_, __) => const HomeScreen()),
-    GoRoute(path: '/details', builder: (_, __) => const DetailsScreen()),
-    GoRoute(path: '/cart', builder: (_, __) => const CartScreen()),
-  ],
-  errorBuilder: (_, state) =>
-      Scaffold(body: Center(child: Text('Route not found: ${state.uri}'))),
-);
+class AppRoutes {
+  static const String onboarding = '/onboarding';
+  static const String home = '/';
+  static const String details = '/details';
+  static const String cart = '/cart';
+
+  static Map<String, WidgetBuilder> get routes => <String, WidgetBuilder>{
+    onboarding: (_) => const OnboardingScreen(),
+    home: (_) => const HomeScreen(),
+    details: (ctx) {
+      final args = ModalRoute.of(ctx)?.settings.arguments;
+      return DetailsScreen(coffee: args is Coffee ? args : null);
+    },
+    cart: (_) => const CartScreen(),
+  };
+}
+
+Route<dynamic> onUnknownRoute(RouteSettings settings) {
+  return MaterialPageRoute<void>(
+    builder: (_) => Scaffold(
+      body: Center(child: Text('Route not found: ${settings.name}')),
+    ),
+  );
+}

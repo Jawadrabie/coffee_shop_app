@@ -33,13 +33,17 @@ class PromoBanner extends StatelessWidget {
                 ),
               ),
             ),
+            // تدرّج خفيف لزيادة التباين مع النص
             Positioned.fill(
               child: DecoratedBox(
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
-                    colors: [Colors.black.withOpacity(.6), Colors.transparent],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
+                    begin: Alignment.centerLeft,
+                    end: Alignment.centerRight,
+                    colors: [
+                      Colors.black.withOpacity(0.10),
+                      Colors.black.withOpacity(0.10),
+                    ],
                   ),
                 ),
               ),
@@ -65,17 +69,54 @@ class PromoBanner extends StatelessWidget {
                 ),
               ),
             ),
-            Positioned(
-              left: 16,
-              bottom: 16,
-              right: 16,
-              child: Text(
-                'Buy one get one FREE',
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 24,
-                  fontWeight: FontWeight.w900,
-                  height: 1.1,
+            // العنوان في منتصف الصورة مع خلفية سوداء مستطيلة لكل سطر
+            Positioned.fill(
+              child: Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 6,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.black.withOpacity(0.85),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: const Text(
+                        'Buy one get',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 28,
+                          fontWeight: FontWeight.w900,
+                          height: 1.1,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 6,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.black.withOpacity(0.85),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: const Text(
+                        'one FREE',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 28,
+                          fontWeight: FontWeight.w900,
+                          height: 1.1,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
