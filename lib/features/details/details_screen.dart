@@ -33,7 +33,10 @@ class DetailScreen extends StatelessWidget {
                         child: CircleAvatar(
                           backgroundColor: Colors.black.withOpacity(0.5),
                           child: IconButton(
-                            icon: const Icon(Icons.arrow_back, color: Colors.white),
+                            icon: const Icon(
+                              Icons.arrow_back,
+                              color: Colors.white,
+                            ),
                             onPressed: () => context.pop(),
                           ),
                         ),
@@ -44,7 +47,10 @@ class DetailScreen extends StatelessWidget {
                         child: CircleAvatar(
                           backgroundColor: Colors.black.withOpacity(0.5),
                           child: IconButton(
-                            icon: const Icon(Icons.favorite_border, color: Colors.white),
+                            icon: const Icon(
+                              Icons.favorite_border,
+                              color: Colors.white,
+                            ),
                             onPressed: () {},
                           ),
                         ),
@@ -66,38 +72,62 @@ class DetailScreen extends StatelessWidget {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(coffee.title, style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold)),
+                                  Text(
+                                    coffee.title,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headlineSmall
+                                        ?.copyWith(fontWeight: FontWeight.bold),
+                                  ),
                                   const SizedBox(height: 4),
-                                  Text(coffee.subtitle, style: Theme.of(context).textTheme.bodyMedium),
+                                  Text(
+                                    coffee.subtitle,
+                                    style: Theme.of(
+                                      context,
+                                    ).textTheme.bodyMedium,
+                                  ),
                                 ],
                               ),
                             ),
                             Row(
                               children: [
-                                const Icon(Icons.star, color: Colors.yellow, size: 24),
+                                const Icon(
+                                  Icons.star,
+                                  color: Colors.yellow,
+                                  size: 24,
+                                ),
                                 const SizedBox(width: 5),
                                 Text(
                                   coffee.rating.toString(),
-                                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                                  style: const TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                               ],
-                            )
+                            ),
                           ],
                         ),
                         const Divider(height: 40),
                         Text(
                           'Description',
-                          style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+                          style: Theme.of(context).textTheme.titleLarge
+                              ?.copyWith(fontWeight: FontWeight.bold),
                         ),
                         const SizedBox(height: 10),
                         Text(
                           'A ${coffee.title} is a coffee drink that is a variant of a caffè latte, commonly served in a glass rather than a cup. It is made with espresso and steamed milk.',
-                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(height: 1.5, color: Colors.grey.shade600),
+                          style: Theme.of(context).textTheme.bodyMedium
+                              ?.copyWith(
+                                height: 1.5,
+                                color: Colors.grey.shade600,
+                              ),
                         ),
                         const SizedBox(height: 20),
                         Text(
                           'Size',
-                          style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+                          style: Theme.of(context).textTheme.titleLarge
+                              ?.copyWith(fontWeight: FontWeight.bold),
                         ),
                         const SizedBox(height: 10),
                         const SizeSelector(),
@@ -111,21 +141,24 @@ class DetailScreen extends StatelessWidget {
 
           // 2. الجزء السفلي الثابت
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 20.0),
+            padding: const EdgeInsets.symmetric(
+              horizontal: 30.0,
+              vertical: 20.0,
+            ),
             decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(24),
-                  topRight: Radius.circular(24),
+              color: Colors.white,
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(24),
+                topRight: Radius.circular(24),
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.2),
+                  spreadRadius: 5,
+                  blurRadius: 10,
+                  offset: const Offset(0, -3),
                 ),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.2),
-                    spreadRadius: 5,
-                    blurRadius: 10,
-                    offset: const Offset(0, -3),
-                  )
-                ]
+              ],
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -133,7 +166,10 @@ class DetailScreen extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Price', style: TextStyle(color: Colors.grey[600], fontSize: 14)),
+                    Text(
+                      'Price',
+                      style: TextStyle(color: Colors.grey[600], fontSize: 14),
+                    ),
                     Text(
                       '\$ ${coffee.price.toStringAsFixed(2)}',
                       style: TextStyle(
@@ -182,9 +218,17 @@ class _SizeSelectorState extends State<SizeSelector> {
           onPressed: () => setState(() => _selectedIndex = index),
           style: OutlinedButton.styleFrom(
             minimumSize: const Size(100, 45),
-            side: BorderSide(color: isSelected ? Theme.of(context).primaryColor : Colors.grey.shade300),
-            backgroundColor: isSelected ? Theme.of(context).primaryColor.withOpacity(0.1) : Colors.transparent,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            side: BorderSide(
+              color: isSelected
+                  ? Theme.of(context).primaryColor
+                  : Colors.grey.shade300,
+            ),
+            backgroundColor: isSelected
+                ? Theme.of(context).primaryColor.withOpacity(0.1)
+                : Colors.transparent,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
           ),
           child: Text(
             _sizes[index],

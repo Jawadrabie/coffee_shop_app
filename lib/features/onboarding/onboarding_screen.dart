@@ -79,8 +79,9 @@ class OnboardingScreen extends StatelessWidget {
                   SizedBox(
                     width: screenWidth,
                     child: ElevatedButton(
-                      onPressed: () =>
-                          Navigator.of(context).pushReplacementNamed(AppRoutes.home),
+                      onPressed: () => Navigator.of(
+                        context,
+                      ).pushReplacementNamed(AppRoutes.home),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFFD17842),
                         foregroundColor: Colors.white,
