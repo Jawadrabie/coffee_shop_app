@@ -128,7 +128,7 @@ class HomeScreen extends StatelessWidget {
                     onTap: () => Navigator.of(
                       context,
                     ).pushNamed('/details', arguments: c),
-                  );
+                      );
                 },
               ),
               const SizedBox(height: 24),
