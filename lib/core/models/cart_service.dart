@@ -42,3 +42,4 @@ class CartService {
   double get totalPrice =>
       items.value.fold<double>(0, (s, e) => s + e.coffee.price * e.quantity);
 }
+
