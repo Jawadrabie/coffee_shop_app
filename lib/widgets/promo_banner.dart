@@ -33,7 +33,6 @@ class PromoBanner extends StatelessWidget {
                 ),
               ),
             ),
-            // تدرّج خفيف لزيادة التباين مع النص
             Positioned.fill(
               child: DecoratedBox(
                 decoration: BoxDecoration(
@@ -69,7 +68,6 @@ class PromoBanner extends StatelessWidget {
                 ),
               ),
             ),
-            // العنوان في منتصف الصورة مع خلفية سوداء مستطيلة لكل سطر
             Positioned.fill(
               child: Center(
                 child: Column(

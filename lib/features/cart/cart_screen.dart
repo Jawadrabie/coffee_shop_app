@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../widgets/app_button.dart';
 import '../../core/models/cart_service.dart';
 import '../../core/models/coffee.dart';
+import '../../core/routing/app_router.dart';
 
 class CartScreen extends StatelessWidget {
   const CartScreen({super.key});
@@ -113,7 +114,12 @@ class CartScreen extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 12),
-                AppButton(label: 'Checkout', onPressed: () {}),
+                AppButton(
+                  label: 'Checkout',
+                  onPressed: () {
+                    Navigator.pushNamed(context, AppRoutes.tracking);
+                  },
+                ),
               ],
             );
           },

@@ -1,20 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../../core/routing/app_router.dart' show AppRoutes;
+import '../../core/routing/app_router.dart';
 
 class OnboardingScreen extends StatelessWidget {
   const OnboardingScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // أبعاد الشاشة
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
       body: Stack(
         children: [
-          // خلفية الصورة
           Positioned.fill(
             child: Image.asset(
               'assets/images/onboarding_coffee.png',
@@ -24,7 +22,6 @@ class OnboardingScreen extends StatelessWidget {
             ),
           ),
 
-          // تدرج داكن من الأسفل للأعلى لزيادة التباين مثل الصورة المرفقة
           Positioned.fill(
             child: Container(
               decoration: BoxDecoration(
@@ -43,7 +40,6 @@ class OnboardingScreen extends StatelessWidget {
             ),
           ),
 
-          // المحتوى السفلي: العنوان، الوصف، والزر
           Positioned(
             left: 0,
             right: 0,
@@ -58,7 +54,7 @@ class OnboardingScreen extends StatelessWidget {
                     textAlign: TextAlign.center,
                     style: GoogleFonts.sora(
                       color: Colors.white,
-                      fontSize: 38,
+                      fontSize: 32,
                       height: 1.25,
                       fontWeight: FontWeight.w700,
                     ),
@@ -70,7 +66,7 @@ class OnboardingScreen extends StatelessWidget {
                     textAlign: TextAlign.center,
                     style: GoogleFonts.sora(
                       color: const Color(0xFFB8B8B8),
-                      fontSize: 15,
+                      fontSize: 13,
                       height: 1.5,
                       fontWeight: FontWeight.w400,
                     ),
@@ -78,24 +74,31 @@ class OnboardingScreen extends StatelessWidget {
                   const SizedBox(height: 28),
                   SizedBox(
                     width: screenWidth,
-                    child: ElevatedButton(
-                      onPressed: () => Navigator.of(
-                        context,
-                      ).pushReplacementNamed(AppRoutes.home),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFFD17842),
-                        foregroundColor: Colors.white,
-                        padding: const EdgeInsets.symmetric(vertical: 18),
-                        textStyle: GoogleFonts.sora(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w700,
+                    child: Material(
+                      color: const Color(0xFFD17842),
+                      borderRadius: BorderRadius.circular(22),
+                      child: InkWell(
+                        borderRadius: BorderRadius.circular(22),
+                        onTap: () {
+                          print('Get Started button pressed');
+                          Navigator.of(
+                            context,
+                          ).pushReplacementNamed(AppRoutes.home);
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(vertical: 18),
+                          child: Center(
+                            child: Text(
+                              'Get Started',
+                              style: GoogleFonts.sora(
+                                color: Colors.white,
+                                fontSize: 18,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                          ),
                         ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(22),
-                        ),
-                        elevation: 0,
                       ),
-                      child: const Text('Get Started'),
                     ),
                   ),
                 ],

@@ -40,7 +40,6 @@ class CoffeeCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // --- Image with Rating ---
             Stack(
               children: [
                 ClipRRect(
@@ -90,7 +89,6 @@ class CoffeeCard extends StatelessWidget {
               ],
             ),
 
-            // --- Coffee Name & Subtitle ---
             Padding(
               padding: const EdgeInsets.fromLTRB(12, 8, 12, 2),
               child: Text(
@@ -114,7 +112,6 @@ class CoffeeCard extends StatelessWidget {
             ),
             const SizedBox(height: 2),
 
-            // --- Price + Add Button ---
             Padding(
               padding: const EdgeInsets.fromLTRB(12, 4, 12, 8),
               child: Row(
@@ -130,7 +127,7 @@ class CoffeeCard extends StatelessWidget {
                   GestureDetector(
                     onTap: () => CartService.instance.add(
                       Coffee(
-                        id: imagePath, // use imagePath as unique id for demo
+                        id: imagePath,
                         title: title,
                         subtitle: subtitle,
                         imagePath: imagePath,
