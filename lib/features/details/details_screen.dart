@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../core/models/coffee.dart';
+import '../tracking/tracking_screen.dart';
 
 class DetailScreen extends StatelessWidget {
   final Coffee coffee;
@@ -181,7 +182,14 @@ class DetailScreen extends StatelessWidget {
               width: 220,
               height: 60,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const TrackingScreen(),
+                    ),
+                  );
+                },
                 child: const Text('Buy Now'),
               ),
             ),

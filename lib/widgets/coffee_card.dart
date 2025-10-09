@@ -91,9 +91,8 @@ class CoffeeCard extends StatelessWidget {
             ),
 
             // --- Coffee Name & Subtitle ---
-            // النصوص وسطية الارتفاع لتجنب overflow
             Padding(
-              padding: const EdgeInsets.fromLTRB(12, 10, 12, 2),
+              padding: const EdgeInsets.fromLTRB(12, 8, 12, 2),
               child: Text(
                 title,
                 maxLines: 1,
@@ -113,11 +112,11 @@ class CoffeeCard extends StatelessWidget {
                 style: TextStyle(color: Colors.grey.shade600, fontSize: 13),
               ),
             ),
-            const SizedBox(height: 4),
+            const SizedBox(height: 2),
 
             // --- Price + Add Button ---
             Padding(
-              padding: const EdgeInsets.fromLTRB(12, 6, 12, 10),
+              padding: const EdgeInsets.fromLTRB(12, 4, 12, 8),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
