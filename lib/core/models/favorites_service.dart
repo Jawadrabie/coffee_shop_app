@@ -43,3 +43,9 @@ class FavoritesService extends ChangeNotifier {
     notifyListeners();
   }
 }
+
+
+
+
+
+
